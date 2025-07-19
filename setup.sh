@@ -1,6 +1,6 @@
 ## Install requirements
 sudo apt install python3-pip wget unzip
-pip3 install llm llm-mistral
+pip3 install llm llm-mistral llm-openrouter
 
 
 ## Download dataset

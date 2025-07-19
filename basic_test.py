@@ -15,14 +15,45 @@ def extract_data():
         print(f"...Extraction done. [{len(megavul)} functions]")
         return megavul
 
+def llm_set_api_keys(name, value):
+    """The llm package only provides this function in CLI, so I extracted it to use it directly in Python.
+    """
+    default = {"// Note": "This file stores secret API credentials. Do not share!"}
+    path = llm.user_dir() / "keys.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if not path.exists():
+        path.write_text(json.dumps(default))
+        path.chmod(0o600)
+    try:
+        current = json.loads(path.read_text())
+    except json.decoder.JSONDecodeError:
+        current = default
+    current[name] = value
+    path.write_text(json.dumps(current, indent=2) + "\n")
+
 
 class LLModel:
     def __init__(self, model_name="mistral/mistral-small-latest"):
-        self.API_KEY = input("Give your Mistral API key: ")
+        # Tested models/providers:
+        # - openrouter/mistralai/mistral-small-24b-instruct-2501:free
+        # - mistral/mistral-small-latest
+
+        if "/" in model_name:
+            model_provider = model_name.split("/")[0]
+        else:
+            model_provider = "openai"
+
+        if llm.get_key(model_provider) == model_provider:
+            print(f"No API key set for {model_provider}.")
+            api_key = input(f"Give your {model_provider} API key: ")
+            llm_set_api_keys(model_provider, api_key)
+        else:
+            print("Found an API key.")
+
         self.model = llm.get_model(model_name)
 
     def prompt(self, msg: str):
-        resp = self.model.prompt(msg, key=self.API_KEY)
+        resp = self.model.prompt(msg)
         return resp.text()
 
     def cve_based_challenge(self, cve_entry: dict, debug=False) -> bool:
@@ -61,8 +92,8 @@ class LLModel:
         else:
             return llm_choice == safe_code_position
 
-    def cve_based_challenge_full_dataset(self, dataset, debug=False):
-        return [self.cve_based_challenge(entry, debug) for entry in dataset]
+    def cve_based_challenge_full_dataset(self, cve_dataset, debug=False):
+        return [self.cve_based_challenge(entry, debug) for entry in cve_dataset]
 
 
 model = LLModel()
