@@ -99,7 +99,12 @@ class LLModel:
             return llm_choice == safe_code_position
 
     def cve_based_challenge_full_dataset(
-        self, cve_dataset, debug=False, delay_between_queries=0.0
+        self,
+        cve_dataset,
+        debug=False,
+        delay_between_queries=0.0,
+        max_retries=1,
+        delay_between_retries=300,
     ):
         results = {}
 
@@ -110,7 +115,22 @@ class LLModel:
             writer.writeheader()
 
             for entry in tqdm.tqdm(cve_dataset, desc="Benchmark in progress..."):
-                success = self.cve_based_challenge(entry, debug)
+                retries = 0
+                success = None
+                while retries <= max_retries:
+                    try:
+                        success = self.cve_based_challenge(entry, debug)
+                        break
+                    except (
+                        llm.errors.ModelError
+                    ) as err:  # In case of error such as exceeded capacity
+                        retries += 1
+                        time.sleep(delay_between_retries)
+                        if retries == max_retries:
+                            raise err
+
+                assert success is not None
+
                 results[entry["cve_id"]] = success
                 writer.writerow({"cve_id": entry["cve_id"], "success": success})
                 if delay_between_queries:
@@ -123,6 +143,6 @@ model = LLModel()
 dataset = extract_data()
 
 benchmark_results = model.cve_based_challenge_full_dataset(
-    dataset[:1000], delay_between_queries=4
+    dataset[:1000], delay_between_queries=2
 )
 print(sum(benchmark_results.values()) / len(benchmark_results))
