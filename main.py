@@ -1,5 +1,6 @@
 import json
 import random
+import csv
 import time
 
 import llm
@@ -9,7 +10,7 @@ llm.load_plugins()
 
 
 def extract_data():
-    with open("./megavul/c_cpp/megavul_simple.json", mode="r") as f:
+    with open("./megavul/c_cpp/megavul_simple.json", encoding="utf-8", mode="r") as f:
         print("Extracting the dataset...")
         megavul = json.load(f)
 
@@ -17,9 +18,9 @@ def extract_data():
         print(f"...Extraction done. [{len(megavul)} functions]")
         return megavul
 
+
 def llm_set_api_keys(name, value):
-    """The llm package only provides this function in CLI, so I extracted it to use it directly in Python.
-    """
+    """The llm package only provides this function in CLI, so I extracted it to use it directly in Python."""
     default = {"// Note": "This file stores secret API credentials. Do not share!"}
     path = llm.user_dir() / "keys.json"
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -35,11 +36,13 @@ def llm_set_api_keys(name, value):
 
 
 class LLModel:
-    def __init__(self, model_name="mistral/mistral-small-latest"):
+    def __init__(self, model_name="mistral/mistral-large-latest"):
         # Tested models/providers:
         # - openrouter/mistralai/mistral-small-24b-instruct-2501:free
         # - mistral/mistral-small-latest
+        # - mistral/mistral-large-latest
 
+        self.model_name = model_name
         if "/" in model_name:
             model_provider = model_name.split("/")[0]
         else:
@@ -95,19 +98,31 @@ class LLModel:
         else:
             return llm_choice == safe_code_position
 
-    def cve_based_challenge_full_dataset(self, cve_dataset, debug=False, delay_between_queries=0.0):
+    def cve_based_challenge_full_dataset(
+        self, cve_dataset, debug=False, delay_between_queries=0.0
+    ):
         results = {}
 
-        for entry in tqdm.tqdm(cve_dataset, desc="Benchmark in progress..."):
-            results[entry['cve_id']] = self.cve_based_challenge(entry, debug)
-            if delay_between_queries:
-                time.sleep(delay_between_queries)
-        
+        with open(
+            f"{self.model_name.replace('/', '-')}.csv", mode="w", encoding="utf-8"
+        ) as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=["cve_id", "success"])
+            writer.writeheader()
+
+            for entry in tqdm.tqdm(cve_dataset, desc="Benchmark in progress..."):
+                success = self.cve_based_challenge(entry, debug)
+                results[entry["cve_id"]] = success
+                writer.writerow({"cve_id": entry["cve_id"], "success": success})
+                if delay_between_queries:
+                    time.sleep(delay_between_queries)
+
         return results
 
 
 model = LLModel()
 dataset = extract_data()
 
-benchmark_results = model.cve_based_challenge_full_dataset(dataset[:1000], delay_between_queries=1)
+benchmark_results = model.cve_based_challenge_full_dataset(
+    dataset[:1000], delay_between_queries=2
+)
 print(sum(benchmark_results.values()) / len(benchmark_results))
