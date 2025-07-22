@@ -124,6 +124,9 @@ class LLModel:
                     except (
                         llm.errors.ModelError
                     ) as err:  # In case of error such as exceeded capacity
+                        print(
+                            f"Prompt failed on CVE {entry['cve_id']}... retrying in {delay_between_retries} seconds."
+                        )
                         retries += 1
                         time.sleep(delay_between_retries)
                         if retries == max_retries:
