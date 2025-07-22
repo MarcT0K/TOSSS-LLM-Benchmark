@@ -36,7 +36,7 @@ def llm_set_api_keys(name, value):
 
 
 class LLModel:
-    def __init__(self, model_name="mistral/mistral-large-latest"):
+    def __init__(self, model_name="mistral/codestral-2501"):
         # Tested models/providers:
         # - openrouter/mistralai/mistral-small-24b-instruct-2501:free
         # - mistral/mistral-small-latest
@@ -123,6 +123,6 @@ model = LLModel()
 dataset = extract_data()
 
 benchmark_results = model.cve_based_challenge_full_dataset(
-    dataset[:1000], delay_between_queries=2
+    dataset[:1000], delay_between_queries=4
 )
 print(sum(benchmark_results.values()) / len(benchmark_results))
