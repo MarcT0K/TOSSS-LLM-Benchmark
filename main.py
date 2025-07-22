@@ -1,5 +1,6 @@
 import json
 import random
+import time
 
 import llm
 
@@ -93,11 +94,18 @@ class LLModel:
         else:
             return llm_choice == safe_code_position
 
-    def cve_based_challenge_full_dataset(self, cve_dataset, debug=False):
-        return {entry['cve_id']: self.cve_based_challenge(entry, debug) for entry in cve_dataset}
+    def cve_based_challenge_full_dataset(self, cve_dataset, debug=False, delay_between_queries=0):
+        results = {}
+        
+        for entry in cve_dataset:
+            results[entry['cve_id']] = self.cve_based_challenge(entry, debug)
+            if delay_between_queries:
+                time.sleep(delay_between_queries)
+        
+        return results
 
 
 model = LLModel()
 dataset = extract_data()
 
-print(sum(model.cve_based_challenge_full_dataset(dataset[:10])) / 10)
+print(sum(model.cve_based_challenge_full_dataset(dataset[:10]).values()) / 10)
