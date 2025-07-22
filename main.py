@@ -3,6 +3,7 @@ import random
 import time
 
 import llm
+import tqdm
 
 llm.load_plugins()
 
@@ -94,10 +95,10 @@ class LLModel:
         else:
             return llm_choice == safe_code_position
 
-    def cve_based_challenge_full_dataset(self, cve_dataset, debug=False, delay_between_queries=0):
+    def cve_based_challenge_full_dataset(self, cve_dataset, debug=False, delay_between_queries=0.0):
         results = {}
-        
-        for entry in cve_dataset:
+
+        for entry in tqdm.tqdm(cve_dataset, desc="Benchmark in progress..."):
             results[entry['cve_id']] = self.cve_based_challenge(entry, debug)
             if delay_between_queries:
                 time.sleep(delay_between_queries)
@@ -108,4 +109,5 @@ class LLModel:
 model = LLModel()
 dataset = extract_data()
 
-print(sum(model.cve_based_challenge_full_dataset(dataset[:10]).values()) / 10)
+benchmark_results = model.cve_based_challenge_full_dataset(dataset[:1000], delay_between_queries=1)
+print(sum(benchmark_results.values()) / len(benchmark_results))

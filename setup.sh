@@ -1,5 +1,5 @@
 ## Install requirements
-sudo apt install python3-pip wget unzip
+sudo apt install python3-pip wget unzip tqdm
 pip3 install llm llm-mistral llm-openrouter
 
 
