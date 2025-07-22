@@ -94,7 +94,7 @@ class LLModel:
             return llm_choice == safe_code_position
 
     def cve_based_challenge_full_dataset(self, cve_dataset, debug=False):
-        return [self.cve_based_challenge(entry, debug) for entry in cve_dataset]
+        return {entry['cve_id']: self.cve_based_challenge(entry, debug) for entry in cve_dataset}
 
 
 model = LLModel()
