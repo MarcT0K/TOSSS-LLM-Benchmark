@@ -6,17 +6,22 @@ import time
 import llm
 import tqdm
 
+import logging
+from tqdm.contrib.logging import logging_redirect_tqdm
 llm.load_plugins()
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
-def extract_data():
-    with open("./megavul/c_cpp/megavul_simple.json", encoding="utf-8", mode="r") as f:
-        print("Extracting the dataset...")
+def extract_data(dataset):
+    logging.info(f"Extracting the dataset from {dataset}...")
+
+    with open(dataset, encoding="utf-8", mode="r") as f:
         megavul = json.load(f)
-
         megavul = [entry for entry in megavul if entry["is_vul"]]
-        print(f"...Extraction done. [{len(megavul)} functions]")
-        return megavul
+        
+    logging.info(f"...Extraction done. [{len(megavul)} functions]")
+    return megavul
 
 
 def llm_set_api_keys(name, value):
@@ -87,9 +92,9 @@ class LLModel:
         llm_choice = self.prompt(challenge_text)
 
         if debug:
-            print("CHALLENGE TEXT:", challenge_text)
-            print("RESPONSE:", llm_choice)
-            print("SAFE CODE POSITION:", safe_code_position)
+            logging.info(f"CHALLENGE TEXT: {challenge_text}")
+            logging.info(f"RESPONSE: {llm_choice}")
+            logging.info(f"SAFE CODE POSITION: {safe_code_position}")
 
         # Strip the LLM response
         llm_choice = llm_choice.replace(".", "")
@@ -107,45 +112,48 @@ class LLModel:
         delay_between_retries=300,
     ):
         results = {}
+        with logging_redirect_tqdm():
+            try:
+                with open(
+                    f"{self.model_name.replace('/', '-')}.csv", mode="w", encoding="utf-8"
+                ) as csvfile:
+                    writer = csv.DictWriter(csvfile, fieldnames=["cve_id", "success"])
+                    writer.writeheader()
 
-        with open(
-            f"{self.model_name.replace('/', '-')}.csv", mode="w", encoding="utf-8"
-        ) as csvfile:
-            writer = csv.DictWriter(csvfile, fieldnames=["cve_id", "success"])
-            writer.writeheader()
+                    for entry in tqdm.tqdm(cve_dataset, desc="Benchmark in progress..."):
+                        retries = 0
+                        success = None
+                        while retries <= max_retries:
+                            try:
+                                success = self.cve_based_challenge(entry, debug)
+                                break
+                            except (
+                                llm.errors.ModelError
+                            ) as err:  # In case of error such as exceeded capacity
+                                logging.error(
+                                    f"Prompt failed on CVE {entry['cve_id']}... retrying in {delay_between_retries} seconds."
+                                )
+                                retries += 1
+                                time.sleep(delay_between_retries)
+                                if retries == max_retries:
+                                    raise err
 
-            for entry in tqdm.tqdm(cve_dataset, desc="Benchmark in progress..."):
-                retries = 0
-                success = None
-                while retries <= max_retries:
-                    try:
-                        success = self.cve_based_challenge(entry, debug)
-                        break
-                    except (
-                        llm.errors.ModelError
-                    ) as err:  # In case of error such as exceeded capacity
-                        print(
-                            f"Prompt failed on CVE {entry['cve_id']}... retrying in {delay_between_retries} seconds."
-                        )
-                        retries += 1
-                        time.sleep(delay_between_retries)
-                        if retries == max_retries:
-                            raise err
+                        assert success is not None
 
-                assert success is not None
-
-                results[entry["cve_id"]] = success
-                writer.writerow({"cve_id": entry["cve_id"], "success": success})
-                if delay_between_queries:
-                    time.sleep(delay_between_queries)
-
+                        results[entry["cve_id"]] = success
+                        writer.writerow({"cve_id": entry["cve_id"], "success": success})
+                        if delay_between_queries:
+                            time.sleep(delay_between_queries)
+            except IOError as e:
+                        logging.error(f"Failed: {e}")
         return results
 
-
+dataset_path = "./megavul/c_cpp/megavul_simple.json"
 model = LLModel()
-dataset = extract_data()
+dataset = extract_data(dataset_path)
 
 benchmark_results = model.cve_based_challenge_full_dataset(
     dataset[:1000], delay_between_queries=2
 )
-print(sum(benchmark_results.values()) / len(benchmark_results))
+accuracy = sum(benchmark_results.values()) / len(benchmark_results)
+logging.info(f"Accuracy ratio: {accuracy}")
