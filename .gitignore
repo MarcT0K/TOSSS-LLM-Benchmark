@@ -211,4 +211,7 @@ __marimo__/
 megavul
 
 # Result file
-*.csv
+.history/
+
+nohup.out
+results/
