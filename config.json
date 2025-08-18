@@ -8,7 +8,7 @@
     {
       "name": "anthropic_claude_3.5_sonnet",
       "model": "openrouter/anthropic/claude-3.5-sonnet",
-      "enabled": true,
+      "enabled": false,
       "rate_limit": {
         "requests_per_minute": 150,
         "delay_between_queries": 0.4
@@ -25,7 +25,7 @@
     {
       "name": "codestral_latest",
       "model": "openrouter/mistralai/codestral-2508",
-      "enabled": true,
+      "enabled": false,
       "rate_limit": {
         "requests_per_minute": 150,
         "delay_between_queries": 0.4
@@ -43,7 +43,7 @@
     {
       "name": "google_gemini_2.5_pro",
       "model": "openrouter/google/gemini-2.5-pro",
-      "enabled": true,
+      "enabled": false,
       "rate_limit": {
         "requests_per_minute": 150,
         "delay_between_queries": 0.4
@@ -60,7 +60,7 @@
     {
       "name": "anthropic_claude_3_opus",
       "model": "openrouter/anthropic/claude-3-opus",
-      "enabled": true,
+      "enabled": false,
       "rate_limit": {
         "requests_per_minute": 150,
         "delay_between_queries": 0.4
@@ -77,7 +77,7 @@
     {
       "name": "meta_llama_3_70b",
       "model": "openrouter/meta-llama/llama-3-70b-instruct",
-      "enabled": true,
+      "enabled": false,
       "rate_limit": {
         "requests_per_minute": 150,
         "delay_between_queries": 0.4
@@ -94,7 +94,7 @@
     {
       "name": "deephermes_3_mistral_24b_preview",
       "model": "openrouter/nousresearch/deephermes-3-mistral-24b-preview",
-      "enabled": true,
+      "enabled": false,
       "rate_limit": { 
         "requests_per_minute": 150,
         "delay_between_queries": 0.4
@@ -111,6 +111,57 @@
     {
       "name": "gpt-oss-20b",
       "model": "openrouter/openai/gpt-oss-20b:free",
+      "enabled": false,
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "delay_between_queries": 1.0
+      },
+      "retry_settings": {
+        "max_retries": 5,
+        "delay_between_retries": 15
+      },
+      "dataset": {
+        "path": "./megavul/c_cpp/megavul_simple.json",
+        "max_samples": 1000
+      }
+    },
+    {
+      "name": "moonshotai/kimi-k2:free",
+      "model": "openrouter/moonshotai/kimi-k2:free",
+      "enabled": true,
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "delay_between_queries": 1.0
+      },
+      "retry_settings": {
+        "max_retries": 5,
+        "delay_between_retries": 15
+      },
+      "dataset": {
+        "path": "./megavul/c_cpp/megavul_simple.json",
+        "max_samples": 1000
+      }
+    },
+    {
+      "name": "google/gemma-3n-e2b-it:free",
+      "model": "openrouter/google/gemma-3n-e2b-it:free",
+      "enabled": true,
+      "rate_limit": {
+        "requests_per_minute": 60,
+        "delay_between_queries": 1.0
+      },
+      "retry_settings": {
+        "max_retries": 5,
+        "delay_between_retries": 15
+      },
+      "dataset": {
+        "path": "./megavul/c_cpp/megavul_simple.json",
+        "max_samples": 1000
+      }
+    },
+    {
+      "name": "deepseek/deepseek-r1-0528-qwen3-8b:free",
+      "model": "openrouter/deepseek/deepseek-r1-0528-qwen3-8b:free",
       "enabled": true,
       "rate_limit": {
         "requests_per_minute": 60,
