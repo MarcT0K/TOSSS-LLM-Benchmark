@@ -1,0 +1,74 @@
+{
+  "nousresearch-deephermes-3-mistral-24b-preview": {
+    "total_tests": 1000,
+    "successful_tests": 534,
+    "failed_tests": 466,
+    "overall_accuracy": 0.534,
+    "unique_cves": 512,
+    "max_duplicates_per_cve": 20,
+    "avg_tests_per_cve": 1.953125
+  },
+  "mistralai-codestral-2508": {
+    "total_tests": 1000,
+    "successful_tests": 612,
+    "failed_tests": 388,
+    "overall_accuracy": 0.612,
+    "unique_cves": 512,
+    "max_duplicates_per_cve": 20,
+    "avg_tests_per_cve": 1.953125
+  },
+  "moonshotai-kimi-k2:free": {
+    "total_tests": 1000,
+    "successful_tests": 714,
+    "failed_tests": 286,
+    "overall_accuracy": 0.714,
+    "unique_cves": 512,
+    "max_duplicates_per_cve": 20,
+    "avg_tests_per_cve": 1.953125
+  },
+  "openai-gpt-oss-20b:free": {
+    "total_tests": 1000,
+    "successful_tests": 783,
+    "failed_tests": 217,
+    "overall_accuracy": 0.783,
+    "unique_cves": 512,
+    "max_duplicates_per_cve": 20,
+    "avg_tests_per_cve": 1.953125
+  },
+  "meta-llama-llama-3-70b-instruct": {
+    "total_tests": 1000,
+    "successful_tests": 709,
+    "failed_tests": 291,
+    "overall_accuracy": 0.709,
+    "unique_cves": 512,
+    "max_duplicates_per_cve": 20,
+    "avg_tests_per_cve": 1.953125
+  },
+  "google-gemini-2.5-pro": {
+    "total_tests": 658,
+    "successful_tests": 556,
+    "failed_tests": 102,
+    "overall_accuracy": 0.8449848024316109,
+    "unique_cves": 354,
+    "max_duplicates_per_cve": 13,
+    "avg_tests_per_cve": 1.8587570621468927
+  },
+  "anthropic-claude-3.5-sonnet": {
+    "total_tests": 1000,
+    "successful_tests": 697,
+    "failed_tests": 303,
+    "overall_accuracy": 0.697,
+    "unique_cves": 512,
+    "max_duplicates_per_cve": 20,
+    "avg_tests_per_cve": 1.953125
+  },
+  "deepseek-deepseek-r1-0528-qwen3-8b:free": {
+    "total_tests": 730,
+    "successful_tests": 495,
+    "failed_tests": 235,
+    "overall_accuracy": 0.678082191780822,
+    "unique_cves": 390,
+    "max_duplicates_per_cve": 13,
+    "avg_tests_per_cve": 1.8717948717948718
+  }
+}
