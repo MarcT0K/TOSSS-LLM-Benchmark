@@ -71,9 +71,14 @@ class ResultsAnalyzer:
                 # Add row index to match with original dataset order
                 df['dataset_index'] = df.index
                 
-                # Convert success to boolean if it's string
-                if df['success'].dtype == 'object':
+                # Convert success to boolean, dropping skipped entries
+                if df['success'].dtype != bool:
                     df['success'] = df['success'].astype(str).str.lower().map({'true': True, 'false': False})
+                    skipped = df['success'].isna().sum()
+                    if skipped > 0:
+                        logger.info(f"Dropping {skipped} skipped entries from {csv_file.name}")
+                    df = df.dropna(subset=['success'])
+                    df['success'] = df['success'].astype(bool)
                 
                 self.results_data[model_name] = df
                 all_data.append(df)

@@ -1,0 +1,406 @@
+{
+    "global_settings": {
+      "output_directory": "./results",
+      "debug_mode": false,
+      "save_detailed_logs": true
+    },
+    "experiments": [
+      {
+        "name": "anthropic_claude_3.5_sonnet_c_cpp",
+        "model": "openrouter/anthropic/claude-3.5-sonnet",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "anthropic_claude_3.5_sonnet_c_cpp_hint",
+        "model": "openrouter/anthropic/claude-3.5-sonnet",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "anthropic_claude_opus-4.6_c_cpp",
+        "model": "openrouter/anthropic/claude-opus-4.6",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "anthropic_claude_opus-4.6_c_cpp_hint",
+        "model": "openrouter/anthropic/claude-opus-4.6",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "anthropic_claude_sonnet-4.6_c_cpp",
+        "model": "openrouter/anthropic/claude-sonnet-4.6",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "anthropic_claude_sonnet-4.6_c_cpp_hint",
+        "model": "openrouter/anthropic/claude-sonnet-4.6",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "deepseek_deepseek-v3.2_c_cpp",
+        "model": "openrouter/deepseek/deepseek-v3.2",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "deepseek_deepseek-v3.2_c_cpp_hint",
+        "model": "openrouter/deepseek/deepseek-v3.2",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "google_gemini_3_flash_preview_c_cpp",
+        "model": "openrouter/google/gemini-3-flash-preview",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "google_gemini_3_flash_preview_c_cpp_hint",
+        "model": "openrouter/google/gemini-3-flash-preview",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "google_gemini_3.1_flash_lite_preview_c_cpp",
+        "model": "openrouter/google/gemini-3.1-flash-lite-preview",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "google_gemini_3.1_flash_lite_preview_c_cpp_hint",
+        "model": "openrouter/google/gemini-3.1-flash-lite-preview",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "meta_llama_3_70b_c_cpp",
+        "model": "openrouter/meta-llama/llama-3-70b-instruct",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "meta_llama_3_70b_c_cpp_hint",
+        "model": "openrouter/meta-llama/llama-3-70b-instruct",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "minimax_m2.5_c_cpp",
+        "model": "openrouter/minimax/minimax-m2.5",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "minimax_m2.5_c_cpp_hint",
+        "model": "openrouter/minimax/minimax-m2.5",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "moonshotai_kimi-k2.5_c_cpp",
+        "model": "openrouter/moonshotai/kimi-k2.5",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "moonshotai_kimi-k2.5_c_cpp_hint",
+        "model": "openrouter/moonshotai/kimi-k2.5",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "openai_gpt-5.4_c_cpp",
+        "model": "openrouter/openai/gpt-5.4",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "openai_gpt-5.4_c_cpp_hint",
+        "model": "openrouter/openai/gpt-5.4",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "qwen_qwen3-coder-next_c_cpp",
+        "model": "openrouter/qwen/qwen3-coder-next",
+        "enabled": true,
+        "hint": false,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      },
+      {
+        "name": "qwen_qwen3-coder-next_c_cpp_hint",
+        "model": "openrouter/qwen/qwen3-coder-next",
+        "enabled": true,
+        "hint": true,
+        "rate_limit": {
+          "requests_per_minute": 150,
+          "delay_between_queries": 0.4
+        },
+        "retry_settings": {
+          "max_retries": 3,
+          "delay_between_retries": 15
+        },
+        "dataset": {
+          "path": "./megavul/c_cpp/megavul_simple.json",
+          "max_samples": 500
+        }
+      }
+    ]
+  }
+  

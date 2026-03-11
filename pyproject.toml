@@ -1,0 +1,18 @@
+[project]
+name = "tosss-benchmark"
+version = "0.1.0"
+description = "TOSSS: Two-Option Secure Snippet Selection benchmark for LLMs"
+requires-python = ">=3.10"
+dependencies = [
+    "llm",
+    "llm-openrouter",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+analysis = [
+    "pandas",
+    "matplotlib",
+    "seaborn",
+    "numpy",
+]

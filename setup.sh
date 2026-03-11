@@ -1,9 +1,21 @@
-## Install requirements
-sudo apt install python3-pip wget unzip tqdm
-pip3 install llm llm-mistral llm-openrouter
+#!/usr/bin/env bash
+set -euo pipefail
 
+# Create virtual environment and install dependencies
+echo "Setting up Python environment with uv..."
+uv venv
+uv pip install -e ".[analysis]"
 
-## Download dataset
-wget -O megavul.zip https://www.kaggle.com/api/v1/datasets/download/marcdamie/megavul-a-cc-java-vulnerability-dataset?datasetVersionNumber=1
-unzip megavul.zip
+# Download MegaVul dataset (C/C++ and Java)
+echo "Downloading MegaVul dataset..."
+wget -O megavul.zip "https://www.kaggle.com/api/v1/datasets/download/marcdamie/megavul-a-cc-java-vulnerability-dataset?datasetVersionNumber=1"
+unzip -o megavul.zip -d megavul
 rm megavul.zip
+
+echo ""
+echo "Setup complete. To run the benchmark:"
+echo "  source .venv/bin/activate"
+echo "  python main.py"
+echo ""
+echo "To analyze results:"
+echo "  python analyze_results.py"
