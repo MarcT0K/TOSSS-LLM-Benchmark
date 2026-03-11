@@ -168,7 +168,7 @@ class LLModel:
             return cleaned
 
         # Match patterns like "A.", "**A**", "Option A", "I choose A", etc.
-        match = re.search(r'\b([AB])\b', cleaned)
+        match = re.search(r"\b([AB])\b", cleaned)
         if match:
             return match.group(1)
 
@@ -190,11 +190,17 @@ class LLModel:
                 for row in reader:
                     if row["cve_id"] and row["success"]:  # Skip empty rows
                         val = row["success"].lower()
-                        success = True if val == "true" else (False if val == "false" else None)
-                        results.append({
-                            "cve_id": row["cve_id"],
-                            "success": success,
-                        })
+                        success = (
+                            True
+                            if val == "true"
+                            else (False if val == "false" else None)
+                        )
+                        results.append(
+                            {
+                                "cve_id": row["cve_id"],
+                                "success": success,
+                            }
+                        )
 
             if results:
                 logging.info(
@@ -237,7 +243,9 @@ class LLModel:
         delay_between_retries=30,
     ):
         hint_suffix = "_hint" if hint else ""
-        csv_filename = f"{self.model_name.replace('/', '-')}_{language}{hint_suffix}.csv"
+        csv_filename = (
+            f"{self.model_name.replace('/', '-')}_{language}{hint_suffix}.csv"
+        )
 
         # Set random seed for reproducibility
         random.seed(RANDOM_SEED)
@@ -285,13 +293,18 @@ class LLModel:
 
                     while retries <= max_retries and success is None:
                         try:
-                            success = self.cve_based_challenge(entry, hint=hint, debug=debug)
+                            success = self.cve_based_challenge(
+                                entry, hint=hint, debug=debug
+                            )
                         except Exception as err:
                             retries += 1
                             if retries <= max_retries:
                                 # Don't retry errors that will never succeed (e.g. context length)
                                 err_str = str(err)
-                                if "400" in err_str and ("context length" in err_str or "too many tokens" in err_str.lower()):
+                                if "400" in err_str and (
+                                    "context length" in err_str
+                                    or "too many tokens" in err_str.lower()
+                                ):
                                     logging.warning(
                                         f"Skipping CVE {entry['cve_id']}: snippet exceeds model context length"
                                     )
@@ -311,7 +324,9 @@ class LLModel:
                     if success is None:
                         # Record as skipped — don't count toward the score
                         results.append({"cve_id": entry["cve_id"], "success": None})
-                        writer.writerow({"cve_id": entry["cve_id"], "success": "skipped"})
+                        writer.writerow(
+                            {"cve_id": entry["cve_id"], "success": "skipped"}
+                        )
                     else:
                         results.append({"cve_id": entry["cve_id"], "success": success})
                         writer.writerow({"cve_id": entry["cve_id"], "success": success})
@@ -327,7 +342,7 @@ class LLModel:
 class ExperimentRunner:
     """Manages and runs multiple model experiments based on configuration."""
 
-    def __init__(self, config_path="config.json"):
+    def __init__(self, config_path="config/default.json"):
         self.config_path = config_path
         self.config = self.load_config()
         self.results_dir = Path(self.config["global_settings"]["output_directory"])
@@ -501,9 +516,14 @@ class ExperimentRunner:
 def main():
     """Main function to run experiments based on configuration."""
     import argparse
+
     parser = argparse.ArgumentParser(description="TOSSS Benchmark Runner")
-    parser.add_argument("--config", "-c", default="config.json",
-                       help="Path to config file (default: config.json)")
+    parser.add_argument(
+        "--config",
+        "-c",
+        default="config/default.json",
+        help="Path to config file (default: config/default.json)",
+    )
     args = parser.parse_args()
 
     runner = ExperimentRunner(config_path=args.config)

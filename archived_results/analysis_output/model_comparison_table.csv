@@ -1,9 +1,0 @@
-Model,Total Tests,Successful Tests,Failed Tests,Overall Accuracy,Unique CVEs,Avg Tests per CVE,Best CVE Accuracy,Worst CVE Accuracy,Std Dev CVE Accuracy
-google-gemini-2.5-pro,658,556,102,0.845,354,1.9,1.000,0.000,0.326
-openai-gpt-oss-20b:free,1000,783,217,0.783,512,2.0,1.000,0.000,0.351
-moonshotai-kimi-k2:free,1000,714,286,0.714,512,2.0,1.000,0.000,0.412
-meta-llama-llama-3-70b-instruct,1000,709,291,0.709,512,2.0,1.000,0.000,0.401
-anthropic-claude-3.5-sonnet,1000,697,303,0.697,512,2.0,1.000,0.000,0.404
-deepseek-deepseek-r1-0528-qwen3-8b:free,730,495,235,0.678,390,1.9,1.000,0.000,0.407
-mistralai-codestral-2508,1000,612,388,0.612,512,2.0,1.000,0.000,0.430
-nousresearch-deephermes-3-mistral-24b-preview,1000,534,466,0.534,512,2.0,1.000,0.000,0.435
