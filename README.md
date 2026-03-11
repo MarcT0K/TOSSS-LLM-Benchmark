@@ -6,7 +6,13 @@ We introduce TOSSS (Two-Option Secure Snippet Selection), a benchmark that measu
 
 Paper: [TODO]
 
+## Benchmark pipeline
 
+Our benchmark relies directly on test cases mined from the CVE database. We use the project [MegaVul](https://github.com/Icyrockton/MegaVul) to extract functions before and after a security fix. We then ask LLMs to choose between the secure and the vulnerable version of the same function. The TOSSS score corresponds to the proportion of correct answers.
+
+This novel benchmarking approach is robust and extensible. As it is plugged on the CVE database, new vulnerabilities and languages can be integrated easily. This ensures that the benchmark remains up-to-date and can test models on advances weaknesses. We refer to our paper for further explanations and experimental results.
+
+![pipeline-schema](assets/benchmark-schema.drawio.png)
 
 ## Set-up
 
@@ -16,7 +22,5 @@ Once setup is complete, run the benchmark pipeline: `python main.py`.
 
 To add new models, you can update the file `config/default.json`.
 
-## Citation
 
-If you use this framework, please cite:
-@misc{TODO}
+![logo](assets/tosss-logo.png)
