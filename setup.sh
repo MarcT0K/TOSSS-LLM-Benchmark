@@ -8,7 +8,7 @@ uv pip install -e ".[analysis]"
 
 # Download MegaVul dataset (C/C++ and Java)
 echo "Downloading MegaVul dataset..."
-wget -O megavul.zip "https://www.kaggle.com/api/v1/datasets/download/marcdamie/megavul-a-cc-java-vulnerability-dataset?datasetVersionNumber=1"
+wget -O megavul.zip "XXXX"
 unzip -o megavul.zip -d megavul
 rm megavul.zip
 
